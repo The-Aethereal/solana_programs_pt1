@@ -1,0 +1,9 @@
+/home/maneuver/Desktop/solana_programs_pt1/native_hello-world/target/sbpf-solana-solana/release/deps/libsolana_system_interface-6be11232bb604cae.rmeta: /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/solana-system-interface-1.0.0/src/lib.rs /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/solana-system-interface-1.0.0/src/error.rs /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/solana-system-interface-1.0.0/src/instruction.rs
+
+/home/maneuver/Desktop/solana_programs_pt1/native_hello-world/target/sbpf-solana-solana/release/deps/libsolana_system_interface-6be11232bb604cae.rlib: /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/solana-system-interface-1.0.0/src/lib.rs /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/solana-system-interface-1.0.0/src/error.rs /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/solana-system-interface-1.0.0/src/instruction.rs
+
+/home/maneuver/Desktop/solana_programs_pt1/native_hello-world/target/sbpf-solana-solana/release/deps/solana_system_interface-6be11232bb604cae.d: /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/solana-system-interface-1.0.0/src/lib.rs /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/solana-system-interface-1.0.0/src/error.rs /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/solana-system-interface-1.0.0/src/instruction.rs
+
+/home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/solana-system-interface-1.0.0/src/lib.rs:
+/home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/solana-system-interface-1.0.0/src/error.rs:
+/home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/solana-system-interface-1.0.0/src/instruction.rs:

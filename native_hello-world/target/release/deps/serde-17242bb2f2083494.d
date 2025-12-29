@@ -1,0 +1,14 @@
+/home/maneuver/Desktop/solana_programs_pt1/native_hello-world/target/release/deps/libserde-17242bb2f2083494.rmeta: /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/lib.rs /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/integer128.rs /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/mod.rs /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/de.rs /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/ser.rs /home/maneuver/Desktop/solana_programs_pt1/native_hello-world/target/release/build/serde-99c88bf1d5413f38/out/private.rs
+
+/home/maneuver/Desktop/solana_programs_pt1/native_hello-world/target/release/deps/libserde-17242bb2f2083494.rlib: /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/lib.rs /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/integer128.rs /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/mod.rs /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/de.rs /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/ser.rs /home/maneuver/Desktop/solana_programs_pt1/native_hello-world/target/release/build/serde-99c88bf1d5413f38/out/private.rs
+
+/home/maneuver/Desktop/solana_programs_pt1/native_hello-world/target/release/deps/serde-17242bb2f2083494.d: /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/lib.rs /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/integer128.rs /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/mod.rs /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/de.rs /home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/ser.rs /home/maneuver/Desktop/solana_programs_pt1/native_hello-world/target/release/build/serde-99c88bf1d5413f38/out/private.rs
+
+/home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/lib.rs:
+/home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/integer128.rs:
+/home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/mod.rs:
+/home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/de.rs:
+/home/maneuver/.cargo/registry/src/index.crates.io-6f17d22bba15001f/serde-1.0.228/src/private/ser.rs:
+/home/maneuver/Desktop/solana_programs_pt1/native_hello-world/target/release/build/serde-99c88bf1d5413f38/out/private.rs:
+
+# env-dep:OUT_DIR=/home/maneuver/Desktop/solana_programs_pt1/native_hello-world/target/release/build/serde-99c88bf1d5413f38/out
