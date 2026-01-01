@@ -1,59 +1,48 @@
 import * as anchor from "@coral-xyz/anchor";
 import { Program } from "@coral-xyz/anchor";
-import { AnchorCounter } from "../target/types/anchor_counter";
+import { Counter } from "../target/types/counter";
+import { PublicKey } from "@solana/web3.js";
 
 describe("counter", () => {
   // Configure the client to use the local cluster.
+  const provider = anchor.AnchorProvider.env();
+  anchor.setProvider(provider);
 
-  const systemProgram = anchor.web3.SystemProgram;
+  const program = anchor.workspace.Counter as Program<Counter>;
 
-  it("Create Counter!", async () => {
-    // Keypair = account
-    const [counter, _counterBump] =
-      await anchor.web3.PublicKey.findProgramAddress(
-        [pg.wallet.publicKey.toBytes()],
-        pg.program.programId
-      );
-    console.log("Your counter address", counter.toString());
-    const tx = await pg.program.methods
-      .createCounter()
-      .accounts({
-        authority: pg.wallet.publicKey,
-        counter: counter,
-        systemProgram: systemProgram.programId,
-      })
-      .rpc();
-    console.log("Your transaction signature", tx);
+  const [counterPDA] = PublicKey.findProgramAddressSync(
+    [Buffer.from("counter")],
+    program.programId,
+  );
+
+  it("Is initialized!", async () => {
+    try {
+      const txSig = await program.methods
+        .initialize()
+        .accounts({
+          counter: counterPDA,
+        })
+        .rpc();
+
+      const accountData = await program.account.counter.fetch(counterPDA);
+      console.log(`Transaction Signature: ${txSig}`);
+      console.log(`Count: ${accountData.count}`);
+    } catch (error) {
+      // If PDA Account already created, then we expect an error
+      console.log(error);
+    }
   });
 
-  it("Fetch a counter!", async () => {
-    // Keypair = account
-    const [counterPubkey, _] = await anchor.web3.PublicKey.findProgramAddress(
-      [pg.wallet.publicKey.toBytes()],
-      pg.program.programId
-    );
-    console.log("Your counter address", counterPubkey.toString());
-    const counter = await pg.program.account.counter.fetch(counterPubkey);
-    console.log("Your counter", counter);
-  });
-
-  it("Update a counter!", async () => {
-    // Keypair = account
-    const [counterPubkey, _] = await anchor.web3.PublicKey.findProgramAddress(
-      [pg.wallet.publicKey.toBytes()],
-      pg.program.programId
-    );
-    console.log("Your counter address", counterPubkey.toString());
-    const counter = await pg.program.account.counter.fetch(counterPubkey);
-    console.log("Your counter", counter);
-    const tx = await pg.program.methods
-      .updateCounter()
+  it("Increment", async () => {
+    const transactionSignature = await program.methods
+      .increment()
       .accounts({
-        counter: counterPubkey,
+        counter: counterPDA,
       })
       .rpc();
-    console.log("Your transaction signature", tx);
-    const counterUpdated = await pg.program.account.counter.fetch(counterPubkey);
-    console.log("Your counter count is: ", counterUpdated.count.toNumber());
+
+    const accountData = await program.account.counter.fetch(counterPDA);
+    console.log(`Transaction Signature: ${transactionSignature}`);
+    console.log(`Count: ${accountData.count}`);
   });
 });

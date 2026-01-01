@@ -2,69 +2,58 @@ use anchor_lang::prelude::*;
 
 declare_id!("Adf9VCdjngGn8f6RZftLNFqc6zVUKs3JF5rvqXzZLwaQ");
 
-
 #[program]
-// Smart contract functions
 pub mod counter {
     use super::*;
 
-    pub fn create_counter(ctx: Context<CreateCounter>) -> Result<()> {
-        msg!("Creating a Counter!!");
-
-        // The creation of the counter must be here
+    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
         let counter = &mut ctx.accounts.counter;
-        counter.authority = ctx.accounts.authority.key();
-        counter.count = 0;
-
-        
-        msg!("Current count is {}", counter.count);
-        msg!("The Admin PubKey is: {} ", counter.authority);
-
+        counter.bump = ctx.bumps.counter; // store bump seed in `Counter` account
+        msg!("Counter account created! Current count: {}", counter.count);
+        msg!("Counter bump: {}", counter.bump);
         Ok(())
     }
 
-    pub fn update_counter(ctx: Context<UpdateCounter>) -> Result<()> {
-        msg!("Adding 1 to the counter!!");
-
-        // Updating the counter must be here 
+    pub fn increment(ctx: Context<Increment>) -> Result<()> {
         let counter = &mut ctx.accounts.counter;
-counter.count += 1 ;
-
-
-        msg!("Current count is {}", counter.count);
-        msg!("{} remaining to reach 1000 ", 1000 - counter.count);
-
+        msg!("Previous counter: {}", counter.count);
+        counter.count = counter.count.checked_add(1).unwrap();
+        msg!("Counter incremented! Current count: {}", counter.count);
         Ok(())
     }
-
 }
 
-// Data validators
 #[derive(Accounts)]
-pub struct CreateCounter<'info> {
+pub struct Initialize<'info> {
     #[account(mut)]
-    authority: Signer<'info>,
+    pub user: Signer<'info>,
+
+    // Create and initialize `Counter` account using a PDA as the address
     #[account(
         init,
-        seeds = [authority.key().as_ref()],
-        bump,
-        payer = authority,
-        space = 100
+        seeds = [b"counter"], // optional seeds for pda
+        bump,                 // bump seed for pda
+        payer = user,
+        space = 8 + Counter::INIT_SPACE
     )]
-    counter: Account<'info, Counter>,
-    system_program: Program<'info, System>,
+    pub counter: Account<'info, Counter>,
+    pub system_program: Program<'info, System>,
 }
 
 #[derive(Accounts)]
-pub struct UpdateCounter<'info> {
-    authority: Signer<'info>,
-    #[account(mut, has_one = authority)]
-    counter: Account<'info, Counter>,
+pub struct Increment<'info> {
+    // The address of the `Counter` account must be a PDA derived with the specified `seeds`
+    #[account(
+        mut,
+        seeds = [b"counter"], // optional seeds for pda
+        bump = counter.bump,  // bump seed for pda stored in `Counter` account
+    )]
+    pub counter: Account<'info, Counter>,
 }
 
-// Data structures
 #[account]
+#[derive(InitSpace)]
 pub struct Counter {
-    authority: Pubkey,
-    count: u64,
+    pub count: u64, // 8 bytes
+    pub bump: u8,   // 1 byte
 }
