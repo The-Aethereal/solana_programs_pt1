@@ -2,34 +2,57 @@
 
 use anchor_lang::prelude::*;
 
-declare_id!("Count3AcZucFDPSFBAeHkQ6AvttieKUkyJ8HiQGhQwe");
+declare_id!("8tdPtpAakqfXDUuaz5W5EYri7u2nY4cvS8v1or2ygVsF");
 
 #[program]
 pub mod counter {
     use super::*;
 
-    pub fn create_task(ctx: Context<CreateTaskContext>) -> Result<()>{
+    pub fn create_task(
+        ctx: Context<CreateTask>,
+        task_id: u64,
+        description: String,
+    ) -> Result<()> {
+        let task = &mut ctx.accounts.task;
+        task.owner = ctx.accounts.owner.key();
+        task.task_id = task_id;
+        task.description = description;
+        task.is_completed = false;
+        task.last_modified = Clock::get()?.unix_timestamp;
 
+        Ok(())
     }
-
 }
 
 #[derive(Accounts)]
-pub CreateTaskContext<info>{
+#[instruction(task_id: u64)]
+pub struct CreateTask<'info> {
     #[account(
         init,
-        seeds = [b"task",owner.key().as_ref(),//here i want the program address so that this pda serves a link between task data account and the owner program account],
-        bump,
-        space = 8 + Task::INIT_SPACE,
         payer = owner,
+        space = Task::INIT_SPACE,
+        seeds = [
+            b"task",
+            owner.key().as_ref(),
+            task_id.to_le_bytes().as_ref(),
+        ],
+        bump,
     )]
+    pub task: Account<'info, Task>,
+
+    #[account(mut)]
+    pub owner: Signer<'info>,
+
+    pub system_program: Program<'info, System>,
 }
 
 #[account]
-pub struct Task{
-    pub owner: Pubkey;
-    pub task_id: u64;
-    pub description : String;
-    pub is_completed: bool;
-    pub last_modified: i64;
+#[derive(InitSpace)]
+pub struct Task {
+    pub owner: Pubkey,
+    pub task_id: u64,
+    #[max_len(280)]
+    pub description: String,
+    pub is_completed: bool,
+    pub last_modified: i64,
 }
