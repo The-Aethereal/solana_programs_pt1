@@ -14,12 +14,41 @@ pub mod counter {
         description: String,
     ) -> Result<()> {
         let task = &mut ctx.accounts.task;
+
         task.owner = ctx.accounts.owner.key();
         task.task_id = task_id;
         task.description = description;
         task.is_completed = false;
         task.last_modified = Clock::get()?.unix_timestamp;
 
+        Ok(())
+    }
+
+    pub fn update_task(
+        ctx: Context<UpdateTask>,
+        new_description: String,
+    ) -> Result<()> {
+        let task = &mut ctx.accounts.task;
+
+        task.description = new_description;
+        task.last_modified = Clock::get()?.unix_timestamp;
+
+        Ok(())
+    }
+    pub fn toggle_task(
+        ctx: Context<UpdateTask>,
+    ) -> Result<()> {
+        let task = &mut ctx.accounts.task;
+
+        task.is_completed = !task.is_completed;
+        task.last_modified = Clock::get()?.unix_timestamp;
+
+        Ok(())
+    }
+
+    pub fn delete_task(
+        _ctx: Context<DeleteTask>,
+    ) -> Result<()> {
         Ok(())
     }
 }
@@ -45,6 +74,43 @@ pub struct CreateTask<'info> {
 
     pub system_program: Program<'info, System>,
 }
+
+#[derive(Accounts)]
+pub struct UpdateTask<'info> {
+    #[account(
+        mut,
+        has_one = owner,
+        seeds = [
+            b"task",
+            owner.key().as_ref(),
+            task.task_id.to_le_bytes().as_ref(),
+        ],
+        bump,
+    )]
+    pub task: Account<'info, Task>,
+
+    pub owner: Signer<'info>,
+}
+
+#[derive(Accounts)]
+pub struct DeleteTask<'info> {
+    #[account(
+        mut,
+        close = owner,
+        has_one = owner,
+        seeds = [
+            b"task",
+            owner.key().as_ref(),
+            task.task_id.to_le_bytes().as_ref(),
+        ],
+        bump,
+    )]
+    pub task: Account<'info, Task>,
+
+    #[account(mut)]
+    pub owner: Signer<'info>,
+}
+
 
 #[account]
 #[derive(InitSpace)]
